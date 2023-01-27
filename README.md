@@ -1,4 +1,4 @@
-# ogg-decoder
+# ogg-vorbis-decoder
 
 Stripped oggmented decoder, allowing to be used in webworker without need for audio context or audio buffers.
 
@@ -6,7 +6,7 @@ Stripped oggmented decoder, allowing to be used in webworker without need for au
 # Usage
 
 ```
-import decode from 'ogg-decoder'
+import decode from 'ogg-vorbis-decoder'
 
 const {channelData, sampleRate} = await decode(arrayBuffer)
 ```
