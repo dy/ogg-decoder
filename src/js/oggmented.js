@@ -1,16 +1,8 @@
 import Module from './oggmented-wasm.js'
 
-function decodeAudioData(buffer) {
-    return new Promise(resolve => {
-        Module().then(oggmented => {
-            try {
-                oggmented.decodeOggData(buffer, resolve)
-            }
-            catch { // Defer to native AudioContext on error
-                super.decodeAudioData(buffer, resolve)
-            }
-        })
-    })
-}
+const module = Module();
 
-export default decodeAudioData
+export default async function decode(buffer) {
+  let ogg = await module;
+  return new Promise(resolve => ogg.decodeOggData(buffer, resolve))
+}
