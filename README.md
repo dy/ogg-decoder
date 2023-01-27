@@ -1,27 +1,15 @@
 # ogg-decoder
 
-Fork of oggmented, allowing to run in webworker without need for audio context or audio buffers.
+Fork of oggmented, allowing to decode in webworker without need for audio context or audio buffers.
 
-This allows you to [`decodeAudioData`](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/decodeAudioData) ogg vorbis buffers correctly in any browser.  This is especially useful in Safari and iOS browsers, which don't `decodeAudioData(oggVorbisBuffer)` [at all](https://caniuse.com/#search=vorbis).
-
-In addition, [Blink](https://en.wikipedia.org/wiki/Blink_(browser_engine)) (Brave, Opera, Chrome) uses ffmpeg, which has [a bug that slightly bloats the end of decoded vorbis audio](https://trac.ffmpeg.org/ticket/6367), resulting in clicks when `audioContext.createBufferSource().loop === true`.  Using this package fixes that (assuming of course that the waveform begins and ends at the same place etc).
-
-
-# Installation
-
-`npm install ogg-decoder`
 
 # Usage
 
-Use it like you would regular AudioContext:
 ```
-import Decoder from 'ogg-decoder'
+import decode from 'ogg-decoder'
 
-const decode = await Decoder()
-
-const {channelData, sampleRate} = decode(arrayBuffer)
+const {channelData, sampleRate} = await decode(arrayBuffer)
 ```
 
-## License
 
-MIT © [jfrancos](https://github.com/jfrancos)
+<p align=center><a href="https://github.com/krishnized/license/">🕉</a></p>
