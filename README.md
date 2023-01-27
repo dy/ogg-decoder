@@ -1,6 +1,6 @@
 # ogg-decoder
 
-Fork of oggmented, allowing to decode in webworker without need for audio context or audio buffers.
+Stripped oggmented decoder, allowing to be used in webworker without need for audio context or audio buffers.
 
 
 # Usage
