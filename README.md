@@ -1,7 +1,7 @@
 # ogg-vorbis-decoder
 
 Stripped oggmented decoder, allowing to be used in webworker without need for audio context or audio buffers.
-
+It's 5 times slower than [`decodeAudioData`](decodeAudioData) – well, better than nothing.
 
 # Usage
 
