@@ -44,7 +44,7 @@ Module['decodeOggData'] = (buffer, callback) => {
             _close_buffer()
             _free(buffer)
             _free(ppp_pcm)
-            callback && callback(channelData)
+            callback && callback({ channelData, buffer: data.buffer, sampleRate: rate, numberOfChannels: channels })
         }
     }
     setTimeout(block)
