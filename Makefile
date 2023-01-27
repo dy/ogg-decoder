@@ -1,6 +1,6 @@
 
-OGG_FILE="https://downloads.xiph.org/releases/ogg/libogg-1.3.4.tar.xz"
-VORBIS_FILE="https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.xz"
+OGG_FILE="https://downloads.xiph.org/releases/ogg/libogg-1.3.5.tar.xz"
+VORBIS_FILE="https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.7.tar.xz"
 PREFIX=`cd ../.. && pwd`/local
 CFLAGS=-O3 --closure 0
 
@@ -29,8 +29,8 @@ emsdk:
 	git clone https://github.com/emscripten-core/emsdk.git
 	cd emsdk \
 		&& git pull \
-		&& ./emsdk install 1.39.10 \
-		&& ./emsdk activate 1.39.10
+		&& EMSDK_ARCH=x86_64 ./emsdk install 1.40.1 \
+		&& EMSDK_ARCH=x86_64 ./emsdk activate 1.40.1
 
 build:
 	mkdir build
