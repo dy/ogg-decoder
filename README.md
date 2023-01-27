@@ -1,5 +1,4 @@
-# oggmented
-oggmented `extends` AudioContext and overrides `decodeAudioData` to use an Emscripten transpiling of libogg-1.3.4 and libvorbis-1.3.6 when it encounters ogg vorbis data.
+# ogg-decoder
 
 This allows you to [`decodeAudioData`](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/decodeAudioData) ogg vorbis buffers correctly in any browser.  This is especially useful in Safari and iOS browsers, which don't `decodeAudioData(oggVorbisBuffer)` [at all](https://caniuse.com/#search=vorbis).
 
@@ -7,16 +6,18 @@ In addition, [Blink](https://en.wikipedia.org/wiki/Blink_(browser_engine)) (Brav
 
 
 # Installation
-`npm install oggmented`
+
+`npm install ogg-vorbis-decoder`
 
 # Usage
+
 Use it like you would regular AudioContext:
 ```
-import oggmentedAudioContext from 'oggmented'
+import Decoder from 'ogg-vorbis-decoder'
 
-const audioCtx = new oggmentedAudioContext()
-// instead of 
-// const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+const decode = await Decoder()
+
+const {channelData, sampleRate} = decode(arrayBuffer)
 ```
 
 ## License

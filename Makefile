@@ -6,11 +6,7 @@ CFLAGS=-O3 --closure 1
 
 src/js/decode.js: src/em/decode.c Makefile src/em/pre.js local/lib
 	EMCC_CLOSURE_ARGS="--language_in ECMASCRIPT6 \
-	--process_common_js_modules \
-	--module_resolution=NODE \
-	--js node_modules/setimmediate/setImmediate.js \
-	--jscomp_off=checkVars \
-	--js node_modules/setimmediate/package.json" \
+	--jscomp_off=checkVars" \
 	emsdk/upstream/emscripten/emcc -Ilocal/include src/em/decode.c -o src/js/oggmented-wasm.js \
 	--pre-js src/em/pre.js ${CFLAGS} \
 	-s MODULARIZE=1 \

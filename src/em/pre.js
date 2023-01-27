@@ -1,6 +1,3 @@
-require("setimmediate")
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 Module['decodeOggData'] = (buffer, callback) => {
     const openBuffer = (inbuffer) => {
         const size = inbuffer.byteLength
@@ -18,10 +15,13 @@ Module['decodeOggData'] = (buffer, callback) => {
             rate: _get_rate()
         }
     }
+
     const { channels, length, rate } = openBuffer(buffer);
-    const audioBuffer = audioCtx.createBuffer(channels, length, rate);
+    const data = new Float32Array(length * channels)
+    const channelData = Array.from({length: channels}, (_,i) => data.subarray(i*length, (i+1)*length));
     const ppp_pcm = _malloc(Uint32Array.BYTES_PER_ELEMENT)
     let index = 0;
+
     const block = () => {
         const time = Date.now()
         let samplesRead;
@@ -32,11 +32,11 @@ Module['decodeOggData'] = (buffer, callback) => {
                 const p_pcm = pp_pcm_view[channel]
                 const p_pcm_view = new Float32Array(HEAPF32.buffer, p_pcm, samplesRead)
                 //copyToChannel is preferable to/faster than getChannelData.set but doesn't work in safari
-                audioBuffer.getChannelData(channel).set(p_pcm_view, index);
+                channelData[channel].set(p_pcm_view, index);
             }
             index += samplesRead
             if (time + 8 < Date.now()) {
-                window.setImmediate(block)
+                setTimeout(block)
                 break
             }
         }
@@ -44,9 +44,10 @@ Module['decodeOggData'] = (buffer, callback) => {
             _close_buffer()
             _free(buffer)
             _free(ppp_pcm)
-            callback && callback(audioBuffer)
+            callback && callback(channelData)
         }
     }
-    setImmediate(block)
-    return audioBuffer
+    setTimeout(block)
+
+    return { buffer: data.buffer, channelData, sampleRate: rate, numberOfChannels: channels}
 }
